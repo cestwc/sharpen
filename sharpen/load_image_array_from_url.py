@@ -7,4 +7,4 @@ def img_from_url(url):
 	image_data = response.read()
 	np_array = np.frombuffer(image_data, np.uint8)
 	image_bgr = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
-	return image_bgr[:, :, ::-1]
+	return image_bgr[:, :, ::-1].copy()
