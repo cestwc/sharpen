@@ -3,7 +3,7 @@ import matplotlib.colors as mcolors
 import numpy as np
 import torch
 
-def view(images, max_images=5, normalise=False, bounding_boxes=None, axis = False):
+def view(images, max_images=5, normalise=False, bounding_boxes=None, axis = True):
 	"""
 	Display images with optional bounding boxes.
 	
