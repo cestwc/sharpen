@@ -35,5 +35,5 @@ generate_serial()
 
 ```python
 from sharpen import view
-view(_your_image, normalise = False, max_images = 1).shape
+view(_your_image, normalise = False, max_images = 1, bounding_boxes= None, axis = True).shape
 ```
