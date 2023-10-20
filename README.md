@@ -27,3 +27,8 @@ model = nn.Sequential(
 
 total, trainable = sharpen.count_parameters(model)
 ```
+
+```python
+from sharpen import generate_serial
+generate_serial()
+```
