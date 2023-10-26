@@ -31,6 +31,10 @@ def view(images, max_images=5, normalise=False, bounding_boxes=None, axis = True
 		assert images.ndim == 4
 	
 	if bounding_boxes is not None:
+		if isinstance(bounding_boxes, torch.Tensor):
+			bounding_boxes = bounding_boxes.cpu().numpy()
+		else:
+			assert isinstance(bounding_boxes, np.ndarray)
 		if bounding_boxes.ndim == 2:
 			bounding_boxes = bounding_boxes[np.newaxis, :]
 		else:
