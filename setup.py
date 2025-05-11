@@ -9,6 +9,13 @@ requirements = [
     'pandas'
 ]
 
+install_requires=[
+    "opencv-python",
+    "numpy>=1.24",
+    "fuzzywuzzy",
+]
+
+
 setup(
     # Metadata
     name='sharpen',
