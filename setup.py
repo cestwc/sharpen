@@ -5,11 +5,7 @@ readme = open('README.md').read()
 VERSION = '0.0.1'
 
 requirements = [
-    'numpy',
     'pandas'
-]
-
-install_requires=[
     "opencv-python",
     "numpy>=1.24",
     "fuzzywuzzy",
