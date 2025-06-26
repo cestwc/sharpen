@@ -37,3 +37,17 @@ generate_serial()
 from sharpen import view
 view(_your_image, normalise = False, max_images = 1, bounding_boxes= None, axis = True).shape
 ```
+
+```python
+from sharpen import push_images
+
+push_images(
+    X = "AT_noise_8_pull/data", # or some array/tensor
+    dataset_repo = "poison-tool",
+    token = 'your_token',
+    config_name = "some-cifar10",
+    label_source = "hf://datasets/cat-claws/poison/cifar10/train-00000-of-00001.parquet", # or some list
+    class_names='cifar10', # ['cifar10', 'cifar100', 'tinyimagenet'] or some repo name
+    # image_sort_mode="plain" # ['plain', 'natural', 'mtime', 'none']
+)
+
