@@ -19,19 +19,19 @@ def main():
 	args = parser.parse_args()
 	
 	if args.command == "push-images":
-	# Load labels from .txt if applicable
-	label_source = args.labels
-	if isinstance(label_source, str) and label_source.endswith(".txt"):
-		with open(label_source) as f:
-		label_source = [int(x.strip()) for x in f]
-	
-	push_images(
-		X=args.images,
-		dataset_repo=args.repo,
-		token=args.token,
-		config_name=args.config,
-		label_source=label_source,
-		class_names=args.class_names,
-		private=args.private,
-		image_sort_mode=args.image_sort_mode
-	)
+		# Load labels from .txt if applicable
+		label_source = args.labels
+		if isinstance(label_source, str) and label_source.endswith(".txt"):
+			with open(label_source) as f:
+			label_source = [int(x.strip()) for x in f]
+		
+		push_images(
+			X=args.images,
+			dataset_repo=args.repo,
+			token=args.token,
+			config_name=args.config,
+			label_source=label_source,
+			class_names=args.class_names,
+			private=args.private,
+			image_sort_mode=args.image_sort_mode
+		)
