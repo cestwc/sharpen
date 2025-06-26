@@ -89,17 +89,17 @@ def load_labels(label_source):
 		raise ValueError("label_source must be a list or .parquet path")
 
 def push_images(	
-	X,
-	dataset_repo: str,
+	images,
+	repo: str,
 	token: str,
 	config_name: str,
-	label_source,
+	labels,
 	class_names='',
 	private=False,
 	image_sort_mode="natural"
 ):
-	images = load_images(X, image_sort_mode=image_sort_mode)
-	labels = load_labels(label_source)
+	images = load_images(images, image_sort_mode=image_sort_mode)
+	labels = load_labels(labels)
 	
 	if len(images) != len(labels):
 		raise ValueError(f"Mismatch: {len(images)} images vs {len(labels)} labels")
@@ -116,4 +116,4 @@ def push_images(
 		"label": labels
 	}, features=features)
 	
-	dataset.push_to_hub(dataset_repo, config_name=config_name, private=private, token=token)
+	dataset.push_to_hub(repo, config_name=config_name, private=private, token=token)
