@@ -12,7 +12,7 @@ def main():
 	push.add_argument("--images", required=True, help="Folder, tensor, or array input")
 	push.add_argument("--labels", required=True, help="Label list or .parquet path")
 	push.add_argument("--repo", required=True, help="HF dataset repo name")
-	# push.add_argument("--token", required=True, help="HF access token")
+	push.add_argument("--token", required=False, help="HF token")
 	push.add_argument("--config-name", required=True, help="Dataset config/version")
 	push.add_argument("--class-names", default='', help="Class names: list, 'cifar10', or HF dataset")
 	push.add_argument("--private", action="store_true", help="Make dataset private")
