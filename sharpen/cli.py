@@ -23,7 +23,7 @@ def main():
 		label_source = args.labels
 		if isinstance(label_source, str) and label_source.endswith(".txt"):
 			with open(label_source) as f:
-			label_source = [int(x.strip()) for x in f]
+				label_source = [int(x.strip()) for x in f]
 		
 		push_images(
 			X=args.images,
