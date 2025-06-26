@@ -42,12 +42,16 @@ view(_your_image, normalise = False, max_images = 1, bounding_boxes= None, axis 
 from sharpen import push_images
 
 push_images(
-    X = "AT_noise_8_pull/data", # or some array/tensor
-    dataset_repo = "poison-tool",
-    token = 'your_token',
-    config_name = "some-cifar10",
-    label_source = "hf://datasets/cat-claws/poison/cifar10/train-00000-of-00001.parquet", # or some list
+    images = array_data,
+    repo = 'your-repo',
+    token = 'your-token',
+    config_name = 'some-cifar10',
+    labels = "hf://datasets/cat-claws/poison/cifar10/train-00000-of-00001.parquet", # or some list
     class_names='cifar10', # ['cifar10', 'cifar100', 'tinyimagenet'] or some repo name
     # image_sort_mode="plain" # ['plain', 'natural', 'mtime', 'none']
 )
-
+```
+Or run from terminal
+```
+sharpen push-images --images AT_T_noise_8_8_push/data --labels hf://datasets/zh-plus/tiny-imagenet/data/train-00000-of-00001-1359597a978bc4fa.parquet --repo your-repo --config-name some-tinyimagenet
+```
