@@ -53,5 +53,5 @@ push_images(
 ```
 Or run from terminal
 ```
-sharpen push-images --images AT_T_noise_8_8_push/data --labels hf://datasets/zh-plus/tiny-imagenet/data/train-00000-of-00001-1359597a978bc4fa.parquet --repo your-repo --config-name some-tinyimagenet
+sharpen push-images --images AT_T_noise_8_8_push/data --labels hf://datasets/zh-plus/tiny-imagenet/data/train-00000-of-00001-1359597a978bc4fa.parquet --class-names tinyimagenet --repo your-repo --config-name some-tinyimagenet
 ```
