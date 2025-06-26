@@ -30,6 +30,12 @@ setup(
     zip_safe=True,
     install_requires=requirements,
 
+    entry_points={
+        "console_scripts": [
+            "sharpen=sharpen.cli:main"
+        ]
+    },
+
     # Classifiers
     classifiers=[
         'Programming Language :: Python',
