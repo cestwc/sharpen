@@ -18,6 +18,18 @@ def main():
 	push.add_argument("--class-names", default='', help="Class names: list, 'cifar10', or HF dataset")
 	push.add_argument("--private", action="store_true", help="Make dataset private")
 	push.add_argument("--image-sort-mode", default="natural", help="Sort mode: natural/plain/mtime/none")
+
+	# Subcommand: push
+	dvips = subparsers.add_parser("dvips-match", help="Approximation of a target Hex color using dvipsnames")
+	dvips.add_argument("hex", help="Target Hex Code (e.g. #3450a0)")
+	dvips.add_argument("-n", "--bangs", type=int, default=2, help="Max depth of mixing (default: 2)")
+	dvips.add_argument("-m", "--metric", choices=['rgb', 'lab'], default='rgb', 
+						help="Distance metric: 'rgb' (Euclidean) or 'lab' (CIEDE2000)")
+	dvips.add_argument("--csv", default=DEFAULT_CSV_URL, help="URL to dvipsnames.csv")
+	dvips.add_argument("--beam", type=int, default=1000, help="Beam search width (default: 1000)")
+	dvips.add_argument("--step", type=int, default=5, help="Mixing step size (default: 5)")
+	dvips.add_argument("--tex", action="store_true", help="Generate LaTeX report file")
+	dvips.add_argument("--output", default="color_match.tex", help="Output filename for LaTeX report")
 	
 	args = parser.parse_args()
 	
@@ -41,19 +53,7 @@ def main():
 			image_sort_mode=args.image_sort_mode
 		)
 	
-	# Subcommand: push
-	dvips = subparsers.add_parser("dvips-match", help="Approximation of a target Hex color using dvipsnames")
-	dvips.add_argument("hex", help="Target Hex Code (e.g. #3450a0)")
-	dvips.add_argument("-n", "--bangs", type=int, default=2, help="Max depth of mixing (default: 2)")
-	dvips.add_argument("-m", "--metric", choices=['rgb', 'lab'], default='rgb', 
-						help="Distance metric: 'rgb' (Euclidean) or 'lab' (CIEDE2000)")
-	dvips.add_argument("--csv", default=DEFAULT_CSV_URL, help="URL to dvipsnames.csv")
-	dvips.add_argument("--beam", type=int, default=1000, help="Beam search width (default: 1000)")
-	dvips.add_argument("--step", type=int, default=5, help="Mixing step size (default: 5)")
-	dvips.add_argument("--tex", action="store_true", help="Generate LaTeX report file")
-	dvips.add_argument("--output", default="color_match.tex", help="Output filename for LaTeX report")
 	
-	args = dvips.parse_args()
 	
 	if args.command == "dvips-match":
 		
