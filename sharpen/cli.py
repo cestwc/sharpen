@@ -21,7 +21,7 @@ def main():
 
 	# Subcommand: push
 	dvips = subparsers.add_parser("dvips", help="Approximation of a target Hex color using dvipsnames")
-	dvips.add_argument("hex", help="Target Hex Code (e.g. #3450a0)")
+	dvips.add_argument("--hex", help="Target Hex Code (e.g. #3450a0)")
 	dvips.add_argument("-n", "--bangs", type=int, default=2, help="Max depth of mixing (default: 2)")
 	dvips.add_argument("-m", "--metric", choices=['rgb', 'lab'], default='rgb', 
 						help="Distance metric: 'rgb' (Euclidean) or 'lab' (CIEDE2000)")
