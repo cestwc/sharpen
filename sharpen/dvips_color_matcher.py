@@ -109,55 +109,63 @@ def delta_e_ciede2000(lab1, lab2):
 # DATA LOADING
 # -------------------------------------------------------------------------
 def load_data():
-	""" Downloads color definitions and adds standard base colors. """
+	""" Downloads color definitions and injects the 19 standard LaTeX base colors. """
 	print(f"Downloading data from: {DEFAULT_CSV_URL}")
+	colors = {}
+	
+	# 1. Load the fancy names (dvipsnames) from CSV
 	try:
 		df = pd.read_csv(DEFAULT_CSV_URL)
-		# ... (rest of your CSV parsing logic) ...
-		
-		# Parse Data
-		colors = {}
 		df.columns = df.columns.str.strip().str.lower()
 		
 		for _, row in df.iterrows():
-			# ... (your existing loop) ...
 			if 'name' not in row or 'hex' not in row: continue
 			name = str(row['name']).strip()
-			hex_val = str(row['hex']).strip()
-			# ... (hex parsing) ...
+			hex_val = str(row['hex']).strip().lstrip('#')
+			if len(hex_val) != 6: continue
+			
 			try:
 				r = int(hex_val[0:2], 16) / 255.0
 				g = int(hex_val[2:4], 16) / 255.0
 				b = int(hex_val[4:6], 16) / 255.0
 				colors[name] = rgb_to_cmyk_naive(r, g, b)
 			except: continue
-	
 	except Exception as e:
 		print(f"Warning: Could not load CSV ({e}). Using base colors only.")
-		colors = {}
 	
-	# --- FIX START: Inject Standard Base Colors ---
-	# These are missing from dvipsnames.csv but are essential for mixing
-	standard_bases = {
-		"Red":     (0, 1, 1, 0),    # cmyk(0,1,1,0)
-		"Green":   (1, 0, 1, 0),    # cmyk(1,0,1,0)
-		"Blue":    (1, 1, 0, 0),    # cmyk(1,1,0,0)
-		"Cyan":    (1, 0, 0, 0),
-		"Magenta": (0, 1, 0, 0),
-		"Yellow":  (0, 0, 1, 0),
-		"Black":   (0, 0, 0, 1),
-		"White":   (0, 0, 0, 0),
-		"Gray":    (0, 0, 0, 0.5)
+	# 2. Inject the 19 Standard LaTeX Base Colors (RGB definitions)
+	# These match the standard xcolor definitions shown in your image.
+	standard_bases_rgb = {
+		"red":       (1.0, 0.0, 0.0),
+		"green":     (0.0, 1.0, 0.0),
+		"blue":      (0.0, 0.0, 1.0),
+		"cyan":      (0.0, 1.0, 1.0),
+		"magenta":   (1.0, 0.0, 1.0),
+		"yellow":    (1.0, 1.0, 0.0),
+		"black":     (0.0, 0.0, 0.0),
+		"white":     (1.0, 1.0, 1.0),
+		"gray":      (0.5, 0.5, 0.5),
+		"darkgray":  (0.25, 0.25, 0.25),
+		"lightgray": (0.75, 0.75, 0.75),
+		"brown":     (0.75, 0.5, 0.25),
+		"lime":      (0.75, 1.0, 0.0),
+		"olive":     (0.5, 0.5, 0.0),
+		"orange":    (1.0, 0.5, 0.0),
+		"pink":      (1.0, 0.75, 0.75),
+		"purple":    (0.75, 0.0, 0.25),
+		"teal":      (0.0, 0.5, 0.5),
+		"violet":    (0.5, 0.0, 0.5)
 	}
 	
-	for name, cmyk in standard_bases.items():
-		if name not in colors:
-			colors[name] = cmyk
-	# --- FIX END ---
+	# Convert these RGBs to your script's CMYK format and add them
+	for name, (r, g, b) in standard_bases_rgb.items():
+		# Only add if not already present (standard bases usually take precedence)
+		# Note: We overwrite here to ensure 'green' is PURE green, not dvips Green.
+		colors[name] = rgb_to_cmyk_naive(r, g, b)
 	
-	print(f" -> Loaded {len(colors)} valid base colors.")
+	print(f" -> Loaded {len(colors)} valid colors (including {len(standard_bases_rgb)} standard bases).")
 	return colors
-
+	
 # -------------------------------------------------------------------------
 # OPTIMIZER
 # -------------------------------------------------------------------------
