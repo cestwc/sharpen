@@ -55,3 +55,13 @@ Or run from terminal
 ```
 sharpen push-images --images AT_T_noise_8_8_push/data --labels hf://datasets/zh-plus/tiny-imagenet/data/train-00000-of-00001-1359597a978bc4fa.parquet --class-names tinyimagenet --repo your-repo --config-name some-tinyimagenet
 ```
+
+```python
+from sharpen import dvips_solve
+dvips_solve("#474747", 3,  "lab", 1000, 5)
+```
+
+Or run from terminal
+```
+sharpen dvips --hex "#FFBE7A" -n 3 -m lab --tex --beam 2000 --step 2
+```
