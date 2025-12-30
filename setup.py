@@ -7,7 +7,6 @@ VERSION = '0.0.1'
 requirements = [
     'pandas',
     "opencv-python",
-    "numpy>=1.24",
     "fuzzywuzzy",
 ]
 
