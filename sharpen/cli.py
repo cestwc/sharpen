@@ -25,7 +25,6 @@ def main():
 	dvips.add_argument("-n", "--bangs", type=int, default=2, help="Max depth of mixing (default: 2)")
 	dvips.add_argument("-m", "--metric", choices=['rgb', 'lab'], default='rgb', 
 						help="Distance metric: 'rgb' (Euclidean) or 'lab' (CIEDE2000)")
-	dvips.add_argument("--csv", default=DEFAULT_CSV_URL, help="URL to dvipsnames.csv")
 	dvips.add_argument("--beam", type=int, default=1000, help="Beam search width (default: 1000)")
 	dvips.add_argument("--step", type=int, default=5, help="Mixing step size (default: 5)")
 	dvips.add_argument("--tex", action="store_true", help="Generate LaTeX report file")
