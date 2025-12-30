@@ -2,6 +2,7 @@ import argparse
 import getpass
 
 from .push_image_dataset_to_hub import push_images
+from .dvips_color_matcher import solve as dvips_solve
 
 def main():
 	parser = argparse.ArgumentParser(prog="sharpen", description="Sharpen CLI tool")
@@ -60,7 +61,7 @@ def main():
 		print(f"Config: n={args.bangs}, beam={args.beam}, step={args.step}")
 		print(f"Metric: {args.metric.upper()} distance")
 		
-		t_rgb, res = solve(args.hex, args.bangs, args.metric, args.beam, args.step)
+		t_rgb, res = dvips_solve(args.hex, args.bangs, args.metric, args.beam, args.step)
 		
 		print("-" * 85)
 		print(f"{'k':<3} | {'Diff':<8} | {'Simulated RGB':<22} | {'Expression'}")
