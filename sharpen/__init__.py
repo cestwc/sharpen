@@ -5,3 +5,4 @@ from .count_torch_model_parameters import count_parameters
 from .convert_torch_state_dict import enhanced_robust_map
 from .display_array_as_image import view
 from .push_image_dataset_to_hub import push_images
+from .dvips_color_matcher import solve as dvips
