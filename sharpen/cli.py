@@ -39,3 +39,39 @@ def main():
 			private=args.private,
 			image_sort_mode=args.image_sort_mode
 		)
+
+	# Subcommand: push
+	dvips = subparsers.add_parser("dvips-match", help="Approximation of a target Hex color using dvipsnames")
+    dvips.add_argument("hex", help="Target Hex Code (e.g. #3450a0)")
+    dvips.add_argument("-n", "--bangs", type=int, default=2, help="Max depth of mixing (default: 2)")
+    dvips.add_argument("-m", "--metric", choices=['rgb', 'lab'], default='rgb', 
+                        help="Distance metric: 'rgb' (Euclidean) or 'lab' (CIEDE2000)")
+    dvips.add_argument("--csv", default=DEFAULT_CSV_URL, help="URL to dvipsnames.csv")
+    dvips.add_argument("--beam", type=int, default=1000, help="Beam search width (default: 1000)")
+    dvips.add_argument("--step", type=int, default=5, help="Mixing step size (default: 5)")
+    dvips.add_argument("--tex", action="store_true", help="Generate LaTeX report file")
+    dvips.add_argument("--output", default="color_match.tex", help="Output filename for LaTeX report")
+    
+    args = dvips.parse_args()
+
+	if args.command == "dvips-match":
+		
+	    print(f"Target: {args.hex}")
+	    print(f"Config: n={args.bangs}, beam={args.beam}, step={args.step}")
+	    print(f"Metric: {args.metric.upper()} distance")
+	    
+	    t_rgb, res = solve(args.hex, args.bangs, args.metric, args.beam, args.step)
+	    
+	    print("-" * 85)
+	    print(f"{'k':<3} | {'Diff':<8} | {'Simulated RGB':<22} | {'Expression'}")
+	    print("-" * 85)
+	    for k in sorted(res.keys()):
+	        gap, _, expr, rgb_val = res[k]
+	        rgb_str = f"({rgb_val[0]*255:.1f}, {rgb_val[1]*255:.1f}, {rgb_val[2]*255:.1f})"
+	        print(f"{k:<3} | {gap:<8.2f} | {rgb_str:<22} | {expr}")
+	    print("-" * 85)
+	    
+	    if args.tex:
+	        with open(args.output, "w") as f:
+	            f.write(generate_latex(args.hex, res, args.metric.upper()))
+	        print(f"LaTeX report saved to: {args.output}")
